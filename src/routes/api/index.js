@@ -14,6 +14,6 @@ router.use(async (ctx, next) => {
 
 
 router
-  .use('/user', require('./user'))
+  .use('/user', require('./user').routes())
 
 module.exports = router;
