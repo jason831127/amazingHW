@@ -15,5 +15,3 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 CREATE UNIQUE INDEX idx_user_email ON user (`email`);
 CREATE UNIQUE INDEX idx_user_tel ON user (`tel`);
-]
-
