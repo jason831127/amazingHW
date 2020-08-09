@@ -3,7 +3,7 @@ module.exports = function(schema) {
   return async (ctx, next) => {
     let error;
     if (schema.query && !ctx.query) throw new Error('req.query required');
-    if (schema.body && !ctx.body) throw new Error('req.body required');
+    if (schema.body && !ctx.request.body) throw new Error('req.body required');
     if (ctx.query && schema.query) {
       let obj = {};
       for (let i in ctx.query) {

@@ -1,5 +1,12 @@
 const Router = require('koa-router');
 const router = new Router();
+const ApiError = require('../../lib/ApiError');
+
+router.use(async (ctx, next) => {
+  ctx.throwApiError = ApiError.throw;
+  ctx.dxid = dxid;
+  await next();
+});
 
 router.use(async (ctx, next) => {
   await next();

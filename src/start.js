@@ -26,7 +26,7 @@ const init = async () => {
   const app = App(server);
     // 0.0.0.0 -> 是為了偵聽 ipv4
     let httpServ = app.listen(PORT_HTTP, '0.0.0.0', () => {
-      logger.log(`Server 【${serviceType}】 listening on port: ${PORT_HTTP}`);
+      logger.log(`Server listening on port: ${PORT_HTTP}`);
     });
     // 先不改 timeout , 一樣是 預設為 5000, 要改再說
     httpServ.keepAliveTimeout = 5000;
