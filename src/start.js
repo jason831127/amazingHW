@@ -15,7 +15,6 @@ const path = require('path');
 
 const init = async () => {
   const config = require('../config/local');
-  logger.info(config);
   let server = new Server();
   server.acceptLang = ACCEPTLANG;
   server.defaultLang = 'tw';
@@ -23,26 +22,16 @@ const init = async () => {
   server.config = config;
   server.rds = Knex(config['rds']);
   server.phase = phase;
-
-  server.onReady = onServerReady;
-};
-
-
-/**
- * 當 Server Ready 之後
- * 1) redis connect 完成
- * 2) init data 完成
- * @param {Object} server Server 物件
- * @param {Object} args 參數
- */
-function onServerReady(server) {
   let PORT_HTTP = process.env.PORT_HTTP || 1337;
   const app = App(server);
-  let httpServ = app.listen(PORT_HTTP, '0.0.0.0', () => {
-    logger.log(`Server 【${serviceType}】 listening on port: ${PORT_HTTP}`);
-  });
-  httpServ.keepAliveTimeout = 5000;
-}
+    // 0.0.0.0 -> 是為了偵聽 ipv4
+    let httpServ = app.listen(PORT_HTTP, '0.0.0.0', () => {
+      logger.log(`Server 【${serviceType}】 listening on port: ${PORT_HTTP}`);
+    });
+    // 先不改 timeout , 一樣是 預設為 5000, 要改再說
+    httpServ.keepAliveTimeout = 5000;
+};
+
 
 init()
   .catch((err) => {

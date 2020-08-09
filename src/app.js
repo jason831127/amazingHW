@@ -3,6 +3,8 @@ const bodyParser = require('koa-bodyparser');
 const Routes = require('./routes');
 const Service = require('./service');
 const localesLib = require('./localesLib');
+const serve = require('koa-static');
+const path = require('path');
 const RegexLib = require('./lib/regex');
 const SMS = require('./lib/sms');
 
