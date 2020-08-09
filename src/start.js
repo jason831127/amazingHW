@@ -16,6 +16,7 @@ const path = require('path');
 const init = async () => {
   const config = require('../config/local');
   logger.info(config);
+  let server = new Server();
   server.acceptLang = ACCEPTLANG;
   server.defaultLang = 'tw';
   // 掛載 plugin
