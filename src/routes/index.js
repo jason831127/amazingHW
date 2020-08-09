@@ -3,6 +3,7 @@ const router = new Router();
 const apiRoutes = require('./api');
 const token = require('./middleware/token');
 
+router.use('/healthy', require('./healthy').routes());
 
 router
 .use(token.parse())
