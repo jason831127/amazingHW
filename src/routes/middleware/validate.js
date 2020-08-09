@@ -1,16 +1,17 @@
 const Joi = require('joi');
-module.exports = function(schema) {
+module.exports = function (schema, apiError, code) {
   return async (ctx, next) => {
     let error;
-    if (schema.query && !ctx.query) throw new Error('req.query required');
-    if (schema.body && !ctx.body) throw new Error('req.body required');
+    code = code || '000';
+    if (schema.query && !ctx.query) apiError(`${code}.001`, 'req.query required');
+    if (schema.body && !ctx.body) apiError(`${code}.002`, 'req.body required');
     if (ctx.query && schema.query) {
       let obj = {};
       for (let i in ctx.query) {
         if (schema.query[i]) obj[i] = ctx.query[i];
       }
       error = validateObject(obj, schema.query);
-      if (error !== null) throw new Error(error);
+      if (error !== null) throw error;
     }
     if (ctx.body && schema.body) {
       let obj = {};
@@ -18,7 +19,7 @@ module.exports = function(schema) {
         if (schema.body[i]) obj[i] = ctx.body[i];
       }
       error = validateObject(obj, schema.query);
-      if (error !== null) throw new Error(error);
+      if (error !== null) throw error;
     }
     await next();
   };
@@ -26,5 +27,6 @@ module.exports = function(schema) {
 
 function validateObject(object, schema) {
   const result = Joi.validate(object, schema);
-  return result.error;
+  if (result.error)
+    return result.error;
 }

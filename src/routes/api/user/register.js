@@ -8,12 +8,12 @@ const phoneRegister = require('./loginProvider/phoneRegister');
 
 
 module.exports = async (ctx, next) => {
-  if (!ctx.request.body.type) ctx.throwApiError('003.000', 'missing parameter: type');
+  if (!ctx.request.body.type) ctx.throwApiError('001.000', 'missing parameter: type');
 
-  let playerInfo = null;
-  
+  //密碼不再這層作處理，不同登錄方式不一定要密碼
+
   try {
-    playerInfo = await login(ctx);
+     await login(ctx);
   } catch (err) {
     throw err;
   }
@@ -24,18 +24,16 @@ module.exports = async (ctx, next) => {
 const login = async function (ctx) {
   let type = ctx.request.body.type;
 
-  let playerInfo = null;
   switch (type) {
     case 'phone':
-      playerInfo = await phoneRegister(ctx);
+      await phoneRegister(ctx);
       break;
     case 'mail':
-      playerInfo = await mailRegister(ctx);
+      await mailRegister(ctx);
       break;
     default:
-      ctx.throwApiError('003.000', 'wrong parameter: type');
+      ctx.throwApiError('001.000', 'wrong parameter: type');
   }
 
-  return playerInfo;
 };
 

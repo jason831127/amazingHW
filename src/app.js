@@ -2,12 +2,18 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const Routes = require('./routes');
 const Service = require('./service');
-const localesLib = require('./lib/localesLib');
+const localesLib = require('./localesLib');
+const RegexLib = require('./lib/regex');
+const SMS = require('./lib/sms');
 
 module.exports = function (server) {
   const app = new Koa();
   app.context.server = server;
-  //掛載通用 function 模組 (service layer也用得到)
+  app.context.tokenExpiresIn = 60 * 60;
+  app.context.regexlib = RegexLib;
+  app.context.sms = new SMS(server.config.smsConfig);
+
+  //掛載通用 function 模組
   app.use(bodyParser({ jsonLimit: '100mb', formLimit: '100mb' }));
   app.use(Service(server));
   // 掛載多國語系
@@ -15,6 +21,7 @@ module.exports = function (server) {
   server.__ = app.context.__;
   // i18n as service
   app.use(serve('./src/locales'));
+  
   app.use(async (ctx, next) => {
     try { 
       await next();
@@ -25,7 +32,7 @@ module.exports = function (server) {
         d: ctx.query ? ctx.query.d : '',
         p: ctx.path,
         code: err.code || '500',
-        message: ctx.__(err.code || '500') || err.message,
+        error_message: ctx.__(err.code || '500') || err.message,
         stack: JSON.stringify(err.stack),
         data: err.data || null
       };
