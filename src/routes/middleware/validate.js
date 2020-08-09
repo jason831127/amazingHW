@@ -12,10 +12,10 @@ module.exports = function(schema) {
       error = validateObject(obj, schema.query);
       if (error !== null) throw new Error(error);
     }
-    if (ctx.body && schema.body) {
+    if (ctx.request.body && schema.body) {
       let obj = {};
-      for (let i in ctx.body) {
-        if (schema.body[i]) obj[i] = ctx.body[i];
+      for (let i in ctx.request.body) {
+        if (schema.body[i]) obj[i] = ctx.request.body[i];
       }
       error = validateObject(obj, schema.query);
       if (error !== null) throw new Error(error);

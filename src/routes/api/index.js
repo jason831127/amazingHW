@@ -4,7 +4,6 @@ const ApiError = require('../../lib/ApiError');
 
 router.use(async (ctx, next) => {
   ctx.throwApiError = ApiError.throw;
-  ctx.dxid = dxid;
   await next();
 });
 
