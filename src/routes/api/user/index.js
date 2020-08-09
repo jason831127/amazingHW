@@ -6,8 +6,9 @@ const Joi = require('@hapi/joi');
 const reqInfoValidate = {
   body: {
     nickname: Joi.string().required(),
-    email: Joi.string().email({ tlds: { allow: false } }),
-    password: Joi.string().required()
+    email: Joi.string().email(),
+    password: Joi.string().required(),
+    tel: Joi.string()
   }
 };
 router

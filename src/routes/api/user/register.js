@@ -25,7 +25,7 @@ const login = async function (ctx) {
   let type = ctx.request.body.type;
 
   switch (type) {
-    case 'phone':
+    case 'tel':
       await phoneRegister(ctx);
       break;
     case 'mail':

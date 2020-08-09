@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 module.exports = function(schema) {
   return async (ctx, next) => {
     let error;
@@ -6,8 +6,8 @@ module.exports = function(schema) {
     if (schema.body && !ctx.request.body) throw new Error('req.body required');
     if (ctx.query && schema.query) {
       let obj = {};
-      for (let i in ctx.query) {
-        if (schema.query[i]) obj[i] = ctx.query[i];
+      for (let i in ctx.request.query) {
+        if (schema.query[i]) obj[i] = ctx.request.query[i];
       }
       error = validateObject(obj, schema.query);
       if (error !== null) throw new Error(error);
@@ -17,7 +17,7 @@ module.exports = function(schema) {
       for (let i in ctx.request.body) {
         if (schema.body[i]) obj[i] = ctx.request.body[i];
       }
-      error = validateObject(obj, schema.query);
+      error = validateObject(obj, schema.body);
       if (error !== null) throw new Error(error);
     }
     await next();
