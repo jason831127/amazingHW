@@ -1,6 +1,5 @@
 
 const User = require('./user');
-const Mail = require('./mail');
 
 
 module.exports = function (server) {

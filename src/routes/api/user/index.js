@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const router = new Router();
 const validate = require('../../middleware/validate');
+const Joi = require('@hapi/joi');
 
 const reqInfoValidate = {
   body: {
@@ -10,6 +11,6 @@ const reqInfoValidate = {
   }
 };
 router
-  .post('/register', validate(reqInfoValidate, ctx.throwApiError, 101), require('./register'))
+  .post('/register', validate(reqInfoValidate), require('./register'))
 
 module.exports = router;

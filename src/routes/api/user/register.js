@@ -2,9 +2,9 @@
  * 註冊驗證
  */
 // mail 帳號登入流程
-const mailRegister = require('./loginProvider/mailRegister');
+const mailRegister = require('./provider/mailRegister');
 // phone 帳號登入的邏輯
-const phoneRegister = require('./loginProvider/phoneRegister');
+const phoneRegister = require('./provider/phoneRegister');
 
 
 module.exports = async (ctx, next) => {

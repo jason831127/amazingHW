@@ -1,4 +1,3 @@
-let request = require('request-promise');
 var nodemailer = require('nodemailer');
 
 

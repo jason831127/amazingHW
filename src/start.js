@@ -14,10 +14,8 @@ const fs = require('fs');
 const path = require('path');
 
 const init = async () => {
-  const config = require('./config/local');
+  const config = require('../config/local');
   logger.info(config);
-
-  let server = Server.getInstance('v1');
   server.acceptLang = ACCEPTLANG;
   server.defaultLang = 'tw';
   // 掛載 plugin

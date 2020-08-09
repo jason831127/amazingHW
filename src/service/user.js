@@ -23,7 +23,7 @@ user.prototype.getList = async function (now) {
 * 用 mail 取得 用戶資料
 * @param {String} mail mail 
 */
-player.prototype.getByMail = async function (mail) {
+user.prototype.getByMail = async function (mail) {
   let rds = this.server.rds;
   return await rds('user').where('mail', '=', mail).first('*');
 };
@@ -34,7 +34,7 @@ player.prototype.getByMail = async function (mail) {
  * 用 tel  取得 用戶資料
  * @param {String} tel tel
  */
-player.prototype.getByTel = async function (tel) {
+user.prototype.getByTel = async function (tel) {
   let rds = this.server.rds;
   return await rds('user').where('tel', '=', tel).first('*');
 };
@@ -45,7 +45,7 @@ player.prototype.getByTel = async function (tel) {
  * 檢查用戶密碼規則
  * @param {String} pd pd
  */
-player.prototype.checkPassword = function (pd) {
+user.prototype.checkPassword = function (pd) {
   if (!pd.length || pd.length < 8) throw new Error('password too short')
   return null;
 };
@@ -54,7 +54,7 @@ player.prototype.checkPassword = function (pd) {
 /**
  * 註冊帳號流程流程
  */
-player.prototype.new = async function (trx, newUser) {
+user.prototype.new = async function (trx, newUser) {
   let rds = trx || this.server.rds;
   let result =  await rds.insert(newUser).into('user');
   if (result.err) {
