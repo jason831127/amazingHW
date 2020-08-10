@@ -3,22 +3,6 @@ function user(server) {
 }
 
 
-user.prototype.getList = async function (now) {
-  let rds = this.server.rds;
-
-  let data = await rds('user')
-    .where(function () {
-      this.where('startTime', '<', now)
-        .andWhere('endTime', '>', now);
-    })
-    .orWhereNull('startTime', 'endTime')
-    .orderBy('startTime', 'desc')
-    .select('*');
-
-  return data;
-};
-
-
 /**
 * 用 mail 取得 用戶資料
 * @param {String} mail mail 
