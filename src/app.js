@@ -23,20 +23,20 @@ module.exports = function (server) {
   server.__ = app.context.__;
   // i18n as service
   app.use(serve('./src/locales'));
-  
+
   app.use(async (ctx, next) => {
-    try { 
+    try {
       await next();
       ctx.app.emit('log', ctx);
     } catch (err) {
       ctx.status = err.status || 500;
       let data = {
         d: ctx.query ? ctx.query.d : '',
-        p: ctx.path,
+        path: ctx.path,
         code: err.code || '500',
-        error_message: ctx.__(err.code || '500') || err.message,
-        stack: JSON.stringify(err.stack),
-        data: err.data || null
+        error_message: ctx.__(err.code || err.message ) || err.message,
+        //stack: JSON.stringify(err.stack),
+        //data: err.data || null
       };
       ctx.body = data;
       ctx.app.emit('error', err, ctx);
@@ -45,10 +45,6 @@ module.exports = function (server) {
 
   app.use(Routes.routes());
 
-  app.on('log', ctx => {
-    let logFormat = logMessage(ctx, 'apiLog');
-    logger.log(JSON.stringify(logFormat));
-  });
 
   // Error Handling
   app.on('error', (err, ctx) => {
@@ -57,26 +53,10 @@ module.exports = function (server) {
     *   write error to log file
     *   save error and request information to database if ctx.request match condition
     */
-   logger.log('ctx', ctx.request.path);
-   logger.log('server error', err);
+    logger.log('ctx', ctx.request.path);
+    logger.log('server error', err);
   });
 
   return app;
 };
 
-function logMessage (ctx, logName, err) {
-  return {
-    logName: logName,
-    time: new Date().toISOString(),
-    phase: process.env.PHASE,
-    payload: ctx.payload || null,
-    method: ctx.request.method,
-    path: ctx.request.path,
-    query: ctx.request.query,
-    body: ctx.request.body,
-    authorization: ctx.headers ? (ctx.headers.authorization || null) : null,
-    modelStr: ctx.model ? JSON.stringify(ctx.model): '',
-    errMessage: err ? err.message : '',
-    err: err || null,
-  };
-}

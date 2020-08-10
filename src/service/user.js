@@ -25,7 +25,7 @@ user.prototype.getList = async function (now) {
 */
 user.prototype.getByMail = async function (mail) {
   let rds = this.server.rds;
-  return await rds('user').where('mail', '=', mail).first('*');
+  return await rds('user').where('email', '=', mail).first('*');
 };
 
 

@@ -1,3 +1,6 @@
 {
-  "073.003": "message parameter missing"
+  "mail.register.mailTitle": "amazingTalker register mail",
+  "mail.register.mailContent": "{name} Hello！ welcome to AmazingTalker",
+  "sms.register": "{name} Hello！ welcome to AmazingTalker"
+
 }

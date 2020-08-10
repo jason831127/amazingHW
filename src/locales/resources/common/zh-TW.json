@@ -1,3 +1,5 @@
 {
-  "073.003": "message parameter missing"
+  "mail.register.mailTitle": "amazingTalker 註冊信",
+  "mail.register.mailContent": "{name} 您好！ 歡迎加入 AmazingTalker",
+  "sms.register": "{name} 您好！ 歡迎加入 AmazingTalker"
 }

@@ -14,7 +14,7 @@
     "client": "mysql",
     "connection": {
       "host": "10.9.0.111",
-      "port": 3308,
+      "port": 3306,
       "user": "db_user",
       "password": "test1234",
       "database": "mydb",
@@ -33,9 +33,11 @@
   },
   "mailServer":  {
     "service": "Gmail",
+    "secure": false,
     "auth": {
-      "user": "tesaefasd",
-      "pass": "asdfasd"
-    }
+      "user": "請輸入帳號",
+      "pass": "請輸入密碼"
+    },
+    "mailSender" :  "請輸入信箱"
   }
 }

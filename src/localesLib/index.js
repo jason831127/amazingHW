@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const locales = require('koa-locales');
-const DEFAULTLOCALEALIAS = { en: 'en-US', es: 'es', tw: 'zh-TW', cn: 'zh-CN' };
+const DEFAULTLOCALEALIAS = { en: 'en-US', tw: 'zh-TW'};
 
 module.exports = function (app, opt) {
 

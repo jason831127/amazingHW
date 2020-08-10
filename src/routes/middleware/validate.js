@@ -10,7 +10,7 @@ module.exports = function(schema) {
         if (schema.query[i]) obj[i] = ctx.request.query[i];
       }
       error = validateObject(obj, schema.query);
-      if (error !== null) throw new Error(error);
+      if (error !== null) throw error;
     }
     if (ctx.request.body && schema.body) {
       let obj = {};
@@ -18,7 +18,8 @@ module.exports = function(schema) {
         if (schema.body[i]) obj[i] = ctx.request.body[i];
       }
       error = validateObject(obj, schema.body);
-      if (error !== null) throw new Error(error);
+      logger.log('show error', error);
+      if (error !== null) throw error;
     }
     await next();
   };
