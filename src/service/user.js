@@ -46,8 +46,8 @@ user.prototype.getByTel = async function (tel) {
  * @param {String} pd pd
  */
 user.prototype.checkPassword = function (pd) {
-  if (!pd.length || pd.length < 8) throw new Error('password too short')
-  return null;
+  if (!pd.length || pd.length < 8) return false
+  return true;
 };
 
 

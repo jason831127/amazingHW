@@ -16,3 +16,5 @@ router
   .post('/register', validate(reqInfoValidate), require('./register'))
 
 module.exports = router;
+
+

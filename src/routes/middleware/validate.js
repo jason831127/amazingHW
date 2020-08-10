@@ -18,7 +18,6 @@ module.exports = function(schema) {
         if (schema.body[i]) obj[i] = ctx.request.body[i];
       }
       error = validateObject(obj, schema.body);
-      logger.log('show error', error);
       if (error !== null) throw error;
     }
     await next();

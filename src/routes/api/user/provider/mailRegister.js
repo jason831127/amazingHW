@@ -6,10 +6,10 @@ module.exports = async function (ctx) {
   let userInfo = null;
   let body = ctx.request.body;
   if (!body.mail) ctx.throwApiError('001.003', 'missing mail');
-
+  let checkPD = ctx.service.user.checkPassword(body.password)
+  if (!checkPD) ctx.throwApiError('001.005', 'password too short');
   try {
     //密碼簡單使用MD5加密
-    ctx.service.user.checkPassword(body.password)
     let md5p = md5(body.password);
     userInfo = await ctx.service.user.getByMail(body.mail);
     if (!userInfo) {
@@ -30,10 +30,8 @@ module.exports = async function (ctx) {
 
   } catch (err) {
     if (err.code = 'ER_DUP_ENTRY')
-      ctx.throwApiError('001.008', 'mail exist');
+      ctx.throwApiError('001.004', 'mail exist');
     switch (err.message) {
-      case '005':
-        ctx.throwApiError('001.005', 'password too short');
       case '006':
         ctx.throwApiError('001.006', 'weak password');
       default:

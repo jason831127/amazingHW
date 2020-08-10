@@ -7,10 +7,11 @@ module.exports = async function (ctx) {
   let body = ctx.request.body;
   if (!body.tel) ctx.throwApiError('001.007', 'missing tel');
   if (!ctx.regexlib.tel.test(body.tel)) ctx.throwApiError('001.011', '電話格式錯誤');
-
+  let checkPD = ctx.service.user.checkPassword(body.password)
+    logger.log('show checkPd', checkPD);
+    if (!checkPD) ctx.throwApiError('001.005', 'password too short');
   try {
     //密碼簡單使用MD5加密
-    ctx.service.user.checkPassword(body.password)
     let md5p = md5(body.password);
     userInfo = await ctx.service.user.getByTel(body.tel);
     if (!userInfo) {

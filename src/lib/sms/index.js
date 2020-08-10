@@ -34,7 +34,7 @@ Sms.prototype.sendMessage = async function (tel, message) {
   let self = this;
   self.option.json.messages[0].text = message;
   self.option.json.messages[0].recipients[0].gsm = tel;
-  logger.log(`send sms tel: ${tel} content: ${message}`)
+  logger.log(`send sms tel: ${tel} content: ${message}`);
   return true;
   // let data = await request.post(self.option);
   // if (data.results[0].status != '0') throw new Error('SMS error, status : ' + data.results[0].status);
